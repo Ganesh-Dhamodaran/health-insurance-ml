@@ -1,0 +1,15 @@
+pandas
+scikit-learn
+matplotlib
+seaborn
+scipy
+statsmodels
+nltk
+transformers
+torch
+keras
+tf-keras
+tensorflow
+sentencepiece
+category_encoders
+waitress
