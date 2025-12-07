@@ -6,55 +6,102 @@ It includes **fraud detection**, **customer segmentation**, **visual analytics**
 
 ---
 
-## 📌 Project Overview
+## 🎯 Problem Statement
 
-Insurance fraud is a major challenge for insurers, leading to billions in losses every year.  
-This project builds an end‑to‑end ML pipeline to:
+Insurance companies face significant financial losses due to fraudulent claims.  
+This project aims to:
 
-✅ Detect fraudulent insurance claims (Supervised ML)  
-✅ Segment customers into meaningful groups (Unsupervised ML)  
-✅ Visualize insights for business decision‑making  
-✅ Deploy models for real‑time predictions  
+### ✅ **Fraud Detection**  
+Identify **suspicious claim activities** using:
 
-The goal is to showcase a **full-stack data science workflow** suitable for real-world applications.
+- Demographic data  
+- Policy and financial data  
+- Risk indicators  
+- Claim history  
+- Behavioral and interaction data  
+
+A synthetic fraud label (`Fraud_Flag`) is generated using realistic business rules to simulate real‑world fraud patterns.
+
+### ✅ **Customer Segmentation**  
+Group customers into meaningful clusters based on:
+
+- Demographics  
+- Behavior  
+- Policy details  
+- Risk profile  
+
+This helps insurers personalize offerings, optimize pricing, and identify high‑risk groups.
 
 ---
 
 ## 📁 Dataset Description
 
-The dataset used in this project is a **synthetic insurance dataset** from Kaggle.  
-It simulates:
+The dataset contains **customer‑centric insurance data** with the following fields:
 
-- Customer demographics  
-- Policy details  
-- Claim history  
-- Fraud indicators  
+### ✅ **Demographics**
+- Age  
+- Gender  
+- Marital Status  
+- Education Level  
+- Occupation  
+- Income Level  
 
-Although synthetic, it closely resembles real insurance data and is ideal for demonstrating ML workflows.
+### ✅ **Geographic**
+- Geographic Information  
+- Location  
+
+### ✅ **Behavioral**
+- Behavioral Data  
+- Purchase History  
+- Interactions with Customer Service  
+
+### ✅ **Policy & Financial**
+- Policy Start Date  
+- Policy Renewal Date  
+- Policy Type  
+- Coverage Amount  
+- Premium Amount  
+- Deductible  
+
+### ✅ **Risk & Claims**
+- Risk Profile  
+- Previous Claims History  
+- Claim History  
+- Driving Record  
+- Credit Score  
+
+### ✅ **Preferences**
+- Customer Preferences  
+- Preferred Communication Channel  
+- Preferred Contact Time  
+- Preferred Language  
+
+### ✅ **Segmentation**
+- Segmentation Group (used for clustering)
 
 ---
 
 ## 🆚 Synthetic vs Real Insurance Dataset
 
 ### ✅ Synthetic Dataset
-- Artificially generated  
-- Cleaner and easier to model  
-- Balanced fraud labels  
-- No privacy issues  
-- Great for learning and demos  
+- Artificially generated and privacy‑safe  
+- Clean, consistent, and easier to model  
+- Ideal for learning, experimentation, and demonstrating ML workflows  
 
 ### ✅ Real Insurance Dataset
-- Collected from actual claims  
-- Highly imbalanced (fraud < 2%)  
-- Messy, noisy, inconsistent  
-- Requires domain knowledge  
-- Harder but more realistic  
+- Collected from actual customer claims  
+- Highly imbalanced, noisy, and complex  
+- Requires heavy cleaning and domain expertise  
 
 ### ✅ In This Project
-We use a **synthetic dataset**, making the project ideal for demonstrating:
+A **synthetic Kaggle dataset** is used to simulate real insurance behavior.  
+It enables end‑to‑end fraud detection and segmentation without privacy concerns.
+
+### ✅ In This Project
+We use a **synthetic dataset**, making it ideal for demonstrating:
 
 - Fraud detection  
-- Clustering  
+- Customer segmentation  
 - Visual analytics  
 - Deployment  
 
@@ -66,11 +113,10 @@ The EDA notebook includes:
 
 - Dataset overview  
 - Missing value analysis  
-- Fraud distribution  
+- Numerical & categorical distributions  
 - Correlation heatmap  
-- Numerical & categorical insights  
-- Outlier detection  
-- Feature relationships  
+- Segmentation group analysis  
+- Behavioral and risk insights  
 
 Visuals are stored in the `visuals/` folder.
 
@@ -83,22 +129,31 @@ Key steps:
 - Handling missing values  
 - Encoding categorical variables  
 - Scaling numerical features  
+- Date feature extraction  
+- Outlier detection  
 - Feature selection  
-- Outlier treatment  
 - Train-test split  
 
 ---
 
-## 🤖 Fraud Detection Models (Supervised ML)
+## 🚨 Fraud Detection (Supervised ML)
 
-The following models are implemented and compared:
+A synthetic fraud label (`Fraud_Flag`) is generated using realistic rules based on:
 
-- ✅ Random Forest  
-- ✅ Support Vector Machine (SVM)  
-- ✅ K-Nearest Neighbors (KNN)  
-- ✅ Logistic Regression (baseline)  
+- Low credit score  
+- Poor driving record  
+- High risk profile  
+- Multiple previous claims  
+- High coverage + low deductible  
+- High premium relative to income  
 
-### Evaluation Metrics:
+### ✅ Models Implemented
+- Logistic Regression (baseline)  
+- Random Forest  
+- Support Vector Machine (SVM)  
+- K-Nearest Neighbors (KNN)  
+
+### ✅ Evaluation Metrics
 - Accuracy  
 - Precision  
 - Recall  
@@ -106,12 +161,39 @@ The following models are implemented and compared:
 - ROC-AUC  
 - Confusion Matrix  
 
-Imbalanced learning techniques like **SMOTE** are applied when needed.
-
 ---
 
 ## 🧩 Customer Segmentation (Unsupervised ML)
 
 Clustering algorithms used:
 
-- ✅ K-Means  
+- K-Means  
+- DBSCAN  
+- Hierarchical Clustering  
+
+### ✅ Visualizations
+- Elbow method  
+- Silhouette score  
+- PCA / t-SNE  
+- Dendrogram  
+
+Cluster profiles are created to interpret customer groups.
+
+---
+
+## 🚀 Deployment
+
+### ✅ Flask API (`/predict`)
+- Accepts JSON input  
+- Returns fraud prediction  
+- Can be integrated with applications  
+
+### ✅ Streamlit Dashboard
+- Interactive fraud prediction  
+- Customer segmentation visualization  
+- Cluster insights  
+- Model performance charts  
+
+---
+
+## 📂 Project Structure
