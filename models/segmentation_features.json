@@ -1,0 +1,32 @@
+{
+  "numeric_features": [
+    "Age",
+    "Income Level",
+    "Location",
+    "Claim History",
+    "Coverage Amount",
+    "Premium Amount",
+    "Deductible",
+    "Risk Profile",
+    "Previous Claims History",
+    "Credit Score"
+  ],
+  "categorical_features": [
+    "Gender",
+    "Marital Status",
+    "Occupation",
+    "Education Level",
+    "Geographic Information",
+    "Behavioral Data",
+    "Purchase History",
+    "Interactions with Customer Service",
+    "Insurance Products Owned",
+    "Policy Type",
+    "Customer Preferences",
+    "Preferred Communication Channel",
+    "Preferred Contact Time",
+    "Preferred Language",
+    "Driving Record",
+    "Life Events"
+  ]
+}

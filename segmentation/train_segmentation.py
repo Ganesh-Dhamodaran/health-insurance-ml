@@ -1,0 +1,3 @@
+from pipeline import train_segmentation_pipeline
+
+train_segmentation_pipeline()
