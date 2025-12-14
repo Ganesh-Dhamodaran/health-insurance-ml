@@ -1,6 +1,14 @@
 from flask import Flask, request, jsonify
 import pickle
-from preprocess import preprocess_input
+
+
+import sys
+import os
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_DIR)
+
+from utils.preprocess_fraud import preprocess_input
 
 app = Flask(__name__)
 

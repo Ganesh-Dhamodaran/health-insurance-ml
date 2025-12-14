@@ -2,8 +2,9 @@ import os
 import joblib
 import pandas as pd
 
+from utils.preprocess_fraud import preprocess_input
 
-# Absolute paths
+# Paths
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
 
@@ -36,65 +37,18 @@ def load_fraud_artifacts():
     )
 
 
-def preprocess_fraud(df, numerical_cols, categorical_cols, scaler, dummy_columns):
-    """
-    Apply the SAME preprocessing steps used during training:
-    ✅ Date feature engineering
-    ✅ Missing value handling
-    ✅ One-hot encoding
-    ✅ Dummy alignment
-    ✅ Scaling
-    """
-
-    df = df.copy()
-
-    # -----------------------------
-    # DATE FEATURE ENGINEERING
-    # -----------------------------
-    if "Policy Start Date" in df.columns and "Policy Renewal Date" in df.columns:
-        df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"], errors="coerce")
-        df["Policy Renewal Date"] = pd.to_datetime(df["Policy Renewal Date"], errors="coerce")
-
-        df["Policy_Duration_Days"] = (df["Policy Renewal Date"] - df["Policy Start Date"]).dt.days
-        df["Policy_Start_Year"] = df["Policy Start Date"].dt.year
-        df["Policy_Start_Month"] = df["Policy Start Date"].dt.month
-
-        df.drop(columns=["Policy Start Date", "Policy Renewal Date"], inplace=True)
-
-    # -----------------------------
-    # HANDLE MISSING VALUES
-    # -----------------------------
-    for col in numerical_cols:
-        if col in df.columns:
-            df[col] = df[col].fillna(df[col].median())
-
-    for col in categorical_cols:
-        if col in df.columns:
-            df[col] = df[col].fillna(df[col].mode()[0])
-
-    # -----------------------------
-    # ONE-HOT ENCODING
-    # -----------------------------
-    df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
-
-    # Align with training dummy columns
-    df = df.reindex(columns=dummy_columns, fill_value=0)
-
-    # -----------------------------
-    # SCALING
-    # -----------------------------
-    df[numerical_cols] = scaler.transform(df[numerical_cols])
-
-    return df
-
-
 def predict_fraud(df):
-    """Run fraud detection on new data."""
+    """
+    Run fraud detection on new data.
+    df can be:
+    ✅ Single-row DataFrame
+    ✅ Multi-row DataFrame
+    """
 
     model, scaler, numerical_cols, categorical_cols, dummy_columns = load_fraud_artifacts()
 
-    # Preprocess
-    X = preprocess_fraud(df, numerical_cols, categorical_cols, scaler, dummy_columns)
+    # ✅ Preprocess using shared function
+    X = preprocess_input(df)
 
     # Predict
     predictions = model.predict(X)
