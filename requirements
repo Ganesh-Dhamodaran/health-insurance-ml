@@ -1,6 +1,17 @@
+# Core scientific stack
+numpy
 pandas
 scikit-learn
+scipy
+
+# Visualization
 matplotlib
 seaborn
-scipy
-statsmodels
+plotly
+
+# Deployment
+flask
+streamlit
+
+# Utilities
+joblib    # for saving/loading models
