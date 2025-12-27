@@ -12,7 +12,6 @@
 - [🧩 Customer Segmentation (Unsupervised ML)](#-customer-segmentation-unsupervised-ml)
 - [🏗️ System Architecture](#️-system-architecture)
 - [🚀 Deployment](#-deployment)
-- [📂 Project Structure](#-project-structure)
 - [🛠️ Installation & Setup](#️-installation--setup)
 - [📊 Dashboard Preview](#-dashboard-preview)
 - [📈 Business Impact](#-business-impact)
@@ -181,8 +180,7 @@ A synthetic fraud label (`Fraud_Flag`) is generated using realistic rules based 
 Clustering algorithms used:
 
 - K‑Means  
-- DBSCAN  
-- Hierarchical Clustering  
+- DBSCAN
 
 ### ✅ Visualizations
 - Elbow method  
@@ -245,55 +243,6 @@ Cluster profiles are created to interpret customer groups.
 - Customer segmentation visualization  
 - Cluster insights  
 - Model performance charts  
-
----
-
-## 📂 Project Structure (Tree View)
-            
-            health-insurance-ml/
-            ├── app/
-            │   ├── app.py
-            │   ├── flask_api.py
-            │   ├── preprocess.py
-            │   └── dashboard/
-            │       ├── fraud_tab.py
-            │       └── segmentation_tab.py
-            │
-            ├── fraud_detection/
-            │   ├── inference.py
-            │   ├── preprocessing.py
-            │   └── model.py
-            │
-            ├── segmentation/
-            │   ├── inference.py
-            │   ├── preprocessing.py
-            │   ├── pipeline.py
-            │   └── profiling.py
-            │
-            ├── models/
-            │   ├── fraud_detection_model.pkl
-            │   ├── scaler.pkl
-            │   ├── numerical_cols.pkl
-            │   ├── categorical_cols.pkl
-            │   ├── dummy_columns.pkl
-            │   ├── segmentation_preprocessor.pkl
-            │   ├── segmentation_kmeans.pkl
-            │   ├── segmentation_pca.pkl
-            │   └── segmentation_features.json
-            │
-            ├── notebooks/
-            │   ├── EDA.ipynb
-            │   ├── feature_engineering.ipynb
-            │   └── model_experiments.ipynb
-            │
-            ├── visuals/
-            │   ├── heatmap.png
-            │   ├── pca_clusters.png
-            │   └── fraud_probability.png
-            │
-            ├── train_segmentation.py
-            ├── requirements.txt
-            └── README.md
 
 ---
 
