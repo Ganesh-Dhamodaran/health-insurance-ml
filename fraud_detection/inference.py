@@ -1,13 +1,12 @@
 import os
 import joblib
-import pandas as pd
+from sklearn.decomposition import PCA
 
 from utils.preprocess_fraud import preprocess_input
 
 # Paths
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
-
 
 def load_fraud_artifacts():
     """Load fraud detection model + preprocessing artifacts."""
@@ -49,6 +48,10 @@ def predict_fraud(df):
 
     # ✅ Preprocess using shared function
     X = preprocess_input(df)
+
+    # ✅ Apply PCA (reduce to 10 components)
+    pca = PCA(n_components=10, random_state=42)
+    X = pca.fit_transform(X)
 
     # Predict
     predictions = model.predict(X)

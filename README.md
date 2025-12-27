@@ -253,6 +253,8 @@ Cluster profiles are created to interpret customer groups.
             health-insurance-ml/
             ├── app/
             │   ├── app.py
+            │   ├── flask_api.py
+            │   ├── preprocess.py
             │   └── dashboard/
             │       ├── fraud_tab.py
             │       └── segmentation_tab.py
@@ -289,7 +291,6 @@ Cluster profiles are created to interpret customer groups.
             │   ├── pca_clusters.png
             │   └── fraud_probability.png
             │
-            ├── train_fraud.py
             ├── train_segmentation.py
             ├── requirements.txt
             └── README.md
@@ -304,7 +305,7 @@ pip install -r requirements.txt
 
 ### ✅ Train models
 
-python train_fraud.py python train_segmentation.py
+python train_segmentation.py
 
 ### ✅ Run Streamlit Dashboard
 

@@ -6,7 +6,6 @@ import os
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
 
-
 def preprocess_input(data):
     """
     Preprocess input for fraud detection.
@@ -63,10 +62,15 @@ def preprocess_input(data):
             df[col] = df[col].fillna(df[col].mode()[0])
 
     # -----------------------------
+    # SCALE NUMERICAL FEATURES
+    # -----------------------------
+    if all(col in df.columns for col in numerical_cols):
+        df[numerical_cols] = scaler.transform(df[numerical_cols])
+
+    # -----------------------------
     # ONE-HOT ENCODING
     # -----------------------------
     existing_cats = [col for col in categorical_cols if col in df.columns]
-
     if existing_cats:
         df = pd.get_dummies(df, columns=existing_cats, drop_first=True)
 
@@ -74,10 +78,5 @@ def preprocess_input(data):
     # ALIGN WITH TRAINING DUMMIES
     # -----------------------------
     df = df.reindex(columns=dummy_cols, fill_value=0)
-
-    # -----------------------------
-    # SCALING
-    # -----------------------------
-    df[numerical_cols] = scaler.transform(df[numerical_cols])
 
     return df
