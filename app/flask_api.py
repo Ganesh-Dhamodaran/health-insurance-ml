@@ -1,9 +1,8 @@
 from flask import Flask, request, jsonify
 import pickle
-
-
-import sys
+import pandas as pd
 import os
+import sys
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOT_DIR)
@@ -15,57 +14,8 @@ app = Flask(__name__)
 # -----------------------------
 # Load trained model
 # -----------------------------
-with open("../models/fraud_detection_model.pkl", "rb") as f:
+with open(os.path.join(ROOT_DIR, "models", "fraud_detection_model.pkl"), "rb") as f:
     model = pickle.load(f)
-
-
-# -----------------------------
-# Landing Page
-# -----------------------------
-@app.route("/")
-def home():
-    return """
-    <html>
-        <head>
-            <title>Health Insurance Fraud Detection API</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f4f7f9;
-                    padding: 40px;
-                    text-align: center;
-                }
-                .container {
-                    background: white;
-                    padding: 30px;
-                    border-radius: 10px;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                    display: inline-block;
-                }
-                h1 {
-                    color: #008080;
-                }
-                p {
-                    font-size: 18px;
-                    color: #333;
-                }
-                code {
-                    background: #eee;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Health Insurance Fraud Detection API</h1>
-                <p>Your API is running successfully.</p>
-                <p>Use the <code>/predict</code> endpoint to submit JSON data and get fraud predictions.</p>
-            </div>
-        </body>
-    </html>
-    """
-
 
 # -----------------------------
 # Prediction Endpoint
@@ -79,11 +29,26 @@ def predict():
         # 2. Apply preprocessing
         X = preprocess_input(data)
 
-        # 3. Predict
-        pred_proba = model.predict_proba(X)[0][1]
+        # 3. Align schema if needed
+        if hasattr(model, "feature_names_in_"):
+            expected = list(model.feature_names_in_)
+            # Add missing columns with 0
+            for col in expected:
+                if col not in X.columns:
+                    X[col] = 0
+            # Drop extras
+            X = X[expected]
+
+        # 4. Predict
+        if hasattr(model, "predict_proba"):
+            pred_proba = model.predict_proba(X)[0][1]
+        else:
+            # fallback if model has no predict_proba
+            pred_proba = float(model.predict(X)[0])
+
         pred_class = int(pred_proba >= 0.5)
 
-        # 4. Return response
+        # 5. Return response
         return jsonify({
             "fraud_probability": float(pred_proba),
             "fraud_flag": pred_class
@@ -91,7 +56,6 @@ def predict():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
 
 # -----------------------------
 # Run the API
